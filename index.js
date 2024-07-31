@@ -7,17 +7,12 @@ const broker = new ServiceBroker({
     transporter: "TCP"
 });
 
-// Регистрируем сервис
+// Регистрируем сервисы
 broker.createService(require("./hello.service"));
+broker.createService(require("./api.service"));
 
 // Запускаем брокера
 broker.start()
     .then(() => {
-        broker.call("hello.sayHello")
-            .then(response => {
-                console.log(response); // Должно вывести "Hello, World!"
-            })
-            .catch(err => {
-                console.error(`Error occurred: ${err.message}`);
-            });
+        broker.repl();
     });
